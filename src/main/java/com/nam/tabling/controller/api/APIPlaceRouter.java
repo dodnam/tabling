@@ -10,7 +10,7 @@ import java.util.List;
 import static org.springframework.web.servlet.function.RequestPredicates.path;
 import static org.springframework.web.servlet.function.RouterFunctions.route;
 
-//@Configuration
+@Configuration
 public class APIPlaceRouter {
 
     @Bean
