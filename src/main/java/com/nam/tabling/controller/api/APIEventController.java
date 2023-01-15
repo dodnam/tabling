@@ -1,5 +1,10 @@
 package com.nam.tabling.controller.api;
 
+import com.nam.tabling.constant.ErrorCode;
+import com.nam.tabling.dto.APIErrorResponse;
+import com.nam.tabling.exception.GeneralException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
