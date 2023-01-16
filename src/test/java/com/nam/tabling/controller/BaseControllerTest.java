@@ -3,27 +3,29 @@ package com.nam.tabling.controller;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@AutoConfigureMockMvc
-@SpringBootTest
+//@AutoConfigureMockMvc
+//@SpringBootTest
+@WebMvcTest(BaseController.class) // ()안에 대상 컨트롤러를 담거나, 안 담으면 모든 컨트롤러를 test한다.
 class BaseControllerTest {
 
-    @Autowired
-    private MockMvc mvc;
+    private final MockMvc mvc;
+
+    public BaseControllerTest(@Autowired MockMvc mvc){
+        this.mvc = mvc;
+    }
     
     @DisplayName("[view][GET] 기본 페이지 요청") // junit5에서 제공하는 자유로운 이름 표기
     @Test
-    void basePageShouldShowIndexPage() throws Exception{
+    void basePageShouldShowIndexPage(@Autowired MockMvc mvc) throws Exception{
         // given
         // when
         // ResultActions result = mvc.perform(get("/"));
