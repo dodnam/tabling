@@ -1,13 +1,13 @@
 package com.nam.tabling.controller.api;
 
-import com.nam.tabling.constant.ErrorCode;
-import com.nam.tabling.dto.APIErrorResponse;
-import com.nam.tabling.exception.GeneralException;
+import com.nam.tabling.constant.EventStatus;
+import com.nam.tabling.dto.APIDataResponse;
+import com.nam.tabling.dto.EventResponse;
+import com.sun.jdi.request.EventRequest;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequestMapping("/api")
@@ -15,21 +15,30 @@ import java.util.List;
 public class APIEventController {
 
     @GetMapping("/events")
-    public List<String> getEvents() throws Exception{
-        throw new HttpRequestMethodNotSupportedException("405 에러 테스트");
-//        return List.of("event1", "event2");
+    public APIDataResponse<List<EventResponse>> getEvents() {
+        return APIDataResponse.of(List.of(EventResponse.of(
+                1L,
+                "오후 운동",
+                EventStatus.OPENED,
+                LocalDateTime.of(2023,1,1,13,0,0),
+                LocalDateTime.of(2023,1,1,13,0,0),
+                0,
+                24,
+                "마스크 꼭 착용하세요"
+            )));
     }
-
+    @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
-    public Boolean createEvent() {
-        throw new GeneralException("제너럴 에러");
-//        return true;
+    public APIDataResponse<Void> createEvent(@RequestBody EventRequest eventRequest) {
+        return APIDataResponse.empty();
     }
 
     @GetMapping("/events/{eventId}")
-    public String getEvent(@PathVariable Integer eventId) {
-        throw new RuntimeException("런타임 에러");
-//        return "event" + eventId;
+    public APIDataResponse<EventResponse> getEvent(@PathVariable Integer eventId) {
+        if(eventId.equals(2L)){
+            return APIDataResponse.empty();
+        }
+        return APIDataResponse.empty();
     }
 
     @PutMapping("/events/{eventId}")
