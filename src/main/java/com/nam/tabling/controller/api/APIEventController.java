@@ -25,7 +25,7 @@ public class APIEventController {
                 0,
                 24,
                 "마스크 꼭 착용하세요"
-            )));
+        )));
     }
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
@@ -38,7 +38,16 @@ public class APIEventController {
         if(eventId.equals(2L)){
             return APIDataResponse.empty();
         }
-        return APIDataResponse.empty();
+        return APIDataResponse.of(EventResponse.of(
+                1L,
+                "오후 운동",
+                EventStatus.OPENED,
+                LocalDateTime.of(2023,1,1,13,0,0),
+                LocalDateTime.of(2023,1,1,13,0,0),
+                0,
+                24,
+                "마스크 꼭 착용하세요"
+        ));
     }
 
     @PutMapping("/events/{eventId}")
