@@ -3,7 +3,6 @@ package com.nam.tabling.service;
 import com.nam.tabling.constant.EventStatus;
 import com.nam.tabling.dto.EventDTO;
 import com.nam.tabling.repository.EventRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,7 +48,7 @@ class EventServiceTest {
     void givenSearchParams_whenSearchingEvents_thenReturnsEventList() {
         // given
         long placeId = 1L;
-        String eventName = "오전 문동";
+        String eventName = "오전 운동";
         EventStatus eventStatus = EventStatus.OPENED;
         LocalDateTime eventStartDatetime = LocalDateTime.of(2023,1,1,0,0,0);
         LocalDateTime eventEndDatetime = LocalDateTime.of(2023,1,2,0,0,0);
@@ -145,14 +144,31 @@ class EventServiceTest {
         // given
         long eventId = 1L;
         EventDTO dto = createEventDTO(1L, "오후 운동", false);
-//        given(eventRepository.updateEvent(eventId, dto).willReturn(true));
+        given(eventRepository.updateEvent(eventId, dto)).willReturn(true);
 
         // when
         boolean result = sut.modifyEvent(eventId, dto);
 
         // then
         assertThat(result).isTrue();
-//        verify(eventRepository).updateEvent(eventId);
+        verify(eventRepository).updateEvent(eventId, dto);
+
+    }
+
+    @DisplayName("이벤트 ID를 주지 않으면, 변경을 중단하고 결과를 false 로 보여준다.")
+    @Test
+    void givenNoEventId_whenModifying_thenEventAndReturnsFalse() {
+        // given
+        long eventId = 1L;
+        EventDTO dto = createEventDTO(1L, "오후 운동", false);
+        given(eventRepository.updateEvent(null, dto)).willReturn(false);
+
+        // when
+        boolean result = sut.modifyEvent(null, dto);
+
+        // then
+        assertThat(result).isFalse();
+        then(eventRepository).should().updateEvent(null, dto);
 
     }
 
@@ -162,14 +178,14 @@ class EventServiceTest {
         // given
         long eventId = 1L;
         EventDTO dto = createEventDTO(1L, "오후 운동", false);
-//        given(eventRepository.updateEvent(eventId, dto).willReturn(false));
+        given(eventRepository.updateEvent(eventId, null)).willReturn(false);
 
         // when
-        boolean result = sut.modifyEvent(eventId, dto);
+        boolean result = sut.modifyEvent(eventId, null);
 
         // then
         assertThat(result).isFalse();
-//        verify(eventRepository).updateEvent(eventId);
+        then(eventRepository).should().updateEvent(eventId, null);
 
     }
 
@@ -178,14 +194,14 @@ class EventServiceTest {
     void givenEventId_whenDeleting_thenDeletesEventAndReturnsTrue() {
         // given
         long eventId = 1L;
-//        given(eventRepository.deleteEvent(eventId).willReturn(true));
+        given(eventRepository.deleteEvent(eventId)).willReturn(true);
 
         // when
         boolean result = sut.removeEvent(eventId);
 
         // then
         assertThat(result).isTrue();
-//        verify(eventRepository).deleteEvent(eventId);
+        then(eventRepository).should().deleteEvent(eventId);
 
     }
 
@@ -194,16 +210,17 @@ class EventServiceTest {
     void givenEventId_whenDeleting_thenDeletesEventAndReturnsFalse() {
         // given
         long eventId = 1L;
-//        given(eventRepository.deleteEvent(eventId).willReturn(false));
+        given(eventRepository.deleteEvent(eventId)).willReturn(false);
 
         // when
         boolean result = sut.removeEvent(null);
 
         // then
         assertThat(result).isFalse();
-//        verify(eventRepository).deleteEvent(eventId);
+        then(eventRepository).should().deleteEvent(null);
 
     }
+
     private EventDTO createEventDTO(long placeId, String eventName, boolean isMorning) {
         String hourStart = isMorning ? "09" : "13";
         String hourEnd = isMorning ? "12" : "16";

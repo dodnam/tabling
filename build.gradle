@@ -1,17 +1,21 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '2.7.8-SNAPSHOT'
-	id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+	id 'org.springframework.boot' version '2.5.3'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 }
 
 group = 'com.nam'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = "16"
 
+//configurations {
+//	compileOnly {
+//		extendsFrom annotaionProcessor
+//	}
+//}
+
 repositories {
 	mavenCentral()
-	maven { url 'https://repo.spring.io/milestone' }
-	maven { url 'https://repo.spring.io/snapshot' }
 }
 
 dependencies {
@@ -24,7 +28,6 @@ dependencies {
 
 }
 
-tasks.named('test') {
+test {
 	useJUnitPlatform()
 }
-targetCompatibility = JavaVersion.VERSION_16
