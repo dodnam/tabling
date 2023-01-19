@@ -12,9 +12,27 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+
 @RestControllerAdvice(annotations = RestController.class) // Rest컨트롤러의 동작을 감시 + ResponseBody
 public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 // ResponseEntityExceptionHandler : Spring mvc를 사용할 때 나타나는 exception을 핸들링 한다.
+
+    @ExceptionHandler
+    public ResponseEntity<Object> general(ConstraintViolationException e, WebRequest request) {
+
+        ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        return super.handleExceptionInternal(
+                e,
+                APIErrorResponse.of(false, errorCode.getCode(), errorCode.getMessage(e)),
+                HttpHeaders.EMPTY,
+                status,
+                request
+        );
+    }
+
     @ExceptionHandler
     public ResponseEntity<Object> general(GeneralException e, WebRequest request) {
 
