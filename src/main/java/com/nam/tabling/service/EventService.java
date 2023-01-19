@@ -32,18 +32,18 @@ public class EventService {
     }
 
     public Optional<EventDTO> getEvent(Long eventId) {
-        return Optional.empty();
+        return eventRepository.findEvent(eventId);
     }
 
     public boolean createEvent(EventDTO eventDTO) {
-        return true;
+        return eventRepository.insertEvent(eventDTO);
     }
 
     public boolean modifyEvent(Long eventId, EventDTO eventDTO) {
-        return true;
+        return eventRepository.updateEvent(eventId, eventDTO);
     }
 
     public boolean removeEvent(Long eventId) {
-        return true;
+        return eventRepository.deleteEvent(eventId);
     }
 }

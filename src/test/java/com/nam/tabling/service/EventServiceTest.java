@@ -70,7 +70,7 @@ class EventServiceTest {
                             .hasFieldOrPropertyWithValue("eventName",eventName)
                             .hasFieldOrPropertyWithValue("eventStatus",eventStatus);
                     assertThat(event.eventStartDatetime()).isAfterOrEqualTo(eventStartDatetime);
-                    assertThat(event.eventStartDatetime()).isAfterOrEqualTo(eventEndDatetime);
+                    assertThat(event.eventEndDatetime()).isAfterOrEqualTo(eventEndDatetime);
                 });
         then(eventRepository).should().findEvents(placeId,eventName,eventStatus,eventStartDatetime,eventEndDatetime);
     }
@@ -210,7 +210,7 @@ class EventServiceTest {
     void givenEventId_whenDeleting_thenDeletesEventAndReturnsFalse() {
         // given
         long eventId = 1L;
-        given(eventRepository.deleteEvent(eventId)).willReturn(false);
+        given(eventRepository.deleteEvent(null)).willReturn(false);
 
         // when
         boolean result = sut.removeEvent(null);
