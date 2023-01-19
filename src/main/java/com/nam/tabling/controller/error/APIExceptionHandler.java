@@ -20,7 +20,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> general(ConstraintViolationException e, WebRequest request) {
-
         ErrorCode errorCode = ErrorCode.VALIDATION_ERROR;
         HttpStatus status = HttpStatus.BAD_REQUEST;
 
@@ -35,7 +34,6 @@ public class APIExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler
     public ResponseEntity<Object> general(GeneralException e, WebRequest request) {
-
         ErrorCode errorCode = e.getErrorcode();
         HttpStatus status = errorCode.isClientSideError() ?
                 HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR;
