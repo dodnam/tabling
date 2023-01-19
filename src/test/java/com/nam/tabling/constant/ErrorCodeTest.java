@@ -62,4 +62,15 @@ class ErrorCodeTest {
         );
     }
 
+    @DisplayName("toString() 호출 포맷")
+    @Test
+    void givenErrorCode_whenToString_thenReturnsSimplifiedToString() {
+        // given
+
+        // when
+        String result = ErrorCode.INTERNAL_ERROR.toString();
+
+        // then
+        assertThat(result).isEqualTo("INTERNAL_ERROR (20000)");
+    }
 }
