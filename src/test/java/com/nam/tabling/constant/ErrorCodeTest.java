@@ -35,7 +35,8 @@ class ErrorCodeTest {
                 arguments(ErrorCode.SPRING_BAD_REQUEST, "SPRING - This is test message"),
                 arguments(ErrorCode.VALIDATION_ERROR, "VALIDATION - This is test message"),
                 arguments(ErrorCode.INTERNAL_ERROR, "INTERNAL - This is test message"),
-                arguments(ErrorCode.SPRING_INTERNAL_ERROR, "SPRING_INTERNAL - This is test message")
+                arguments(ErrorCode.SPRING_INTERNAL_ERROR, "SPRING_INTERNAL - This is test message"),
+                arguments(ErrorCode.DATA_ACCESS_ERROR, "DATA_ACCESS_ERROR - This is test message")
         );
     }
 
