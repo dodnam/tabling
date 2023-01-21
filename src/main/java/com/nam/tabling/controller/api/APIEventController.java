@@ -6,6 +6,7 @@ import com.nam.tabling.dto.EventResponse;
 import com.nam.tabling.service.EventService;
 import com.sun.jdi.request.EventRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +18,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Validated
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -44,6 +46,8 @@ public class APIEventController {
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping("/events")
     public APIDataResponse<Void> createEvent(@Valid @RequestBody EventRequest eventRequest) {
+        log.debug("보고 싶은 값 : {}", eventRequest);
+        //        boolean result = eventService.createEvent(eventRequest.toDTO());
         return APIDataResponse.empty();
     }
 
