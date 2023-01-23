@@ -1,5 +1,6 @@
 package com.nam.tabling.domain.controller.error;
 
+import com.nam.tabling.controller.error.BaseErrorController;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

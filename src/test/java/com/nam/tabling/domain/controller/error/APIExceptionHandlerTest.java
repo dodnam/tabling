@@ -1,8 +1,9 @@
 package com.nam.tabling.domain.controller.error;
 
-import com.nam.tabling.domain.constant.ErrorCode;
-import com.nam.tabling.domain.dto.APIErrorResponse;
-import com.nam.tabling.domain.exception.GeneralException;
+import com.nam.tabling.constant.ErrorCode;
+import com.nam.tabling.controller.error.APIExceptionHandler;
+import com.nam.tabling.dto.APIErrorResponse;
+import com.nam.tabling.exception.GeneralException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

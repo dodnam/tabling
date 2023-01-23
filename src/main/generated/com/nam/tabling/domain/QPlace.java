@@ -1,9 +1,8 @@
 package com.nam.tabling.domain;
 
-import com.nam.tabling.domain.domain.AdminPlaceMap;
 import com.nam.tabling.domain.domain.Event;
 import com.nam.tabling.domain.domain.Place;
-import com.nam.tabling.domain.constant.PlaceType;
+import com.nam.tabling.constant.PlaceType;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.*;

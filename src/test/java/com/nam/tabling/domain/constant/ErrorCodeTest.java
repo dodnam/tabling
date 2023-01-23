@@ -1,5 +1,6 @@
 package com.nam.tabling.domain.constant;
 
+import com.nam.tabling.constant.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

@@ -1,10 +1,11 @@
 package com.nam.tabling.domain.service;
 
-import com.nam.tabling.domain.constant.ErrorCode;
-import com.nam.tabling.domain.constant.EventStatus;
-import com.nam.tabling.domain.dto.EventDTO;
-import com.nam.tabling.domain.exception.GeneralException;
-import com.nam.tabling.domain.repository.EventRepository;
+import com.nam.tabling.constant.ErrorCode;
+import com.nam.tabling.constant.EventStatus;
+import com.nam.tabling.dto.EventDTO;
+import com.nam.tabling.exception.GeneralException;
+import com.nam.tabling.repository.EventRepository;
+import com.nam.tabling.service.EventService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

@@ -1,7 +1,6 @@
 package com.nam.tabling.domain;
 
 import com.nam.tabling.domain.domain.Admin;
-import com.nam.tabling.domain.domain.AdminPlaceMap;
 import com.querydsl.core.types.Path;
 import com.querydsl.core.types.PathMetadata;
 import com.querydsl.core.types.dsl.*;
