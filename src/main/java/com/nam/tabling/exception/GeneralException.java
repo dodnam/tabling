@@ -4,49 +4,48 @@ import com.nam.tabling.constant.ErrorCode;
 import lombok.Getter;
 
 @Getter
-public class GeneralException extends RuntimeException{
+public class GeneralException extends RuntimeException {
 
-    private final ErrorCode errorcode;
+    private final ErrorCode errorCode;
 
     public GeneralException() {
-        super();
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
+        super(ErrorCode.INTERNAL_ERROR.getMessage());
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(String message) {
-        super(message);
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
+        super(ErrorCode.INTERNAL_ERROR.getMessage(message));
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(String message, Throwable cause) {
-        super(message, cause);
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
+        super(ErrorCode.INTERNAL_ERROR.getMessage(message), cause);
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(Throwable cause) {
-        super(cause);
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
-    }
-
-    public GeneralException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
+        super(ErrorCode.INTERNAL_ERROR.getMessage(cause));
+        this.errorCode = ErrorCode.INTERNAL_ERROR;
     }
 
     public GeneralException(ErrorCode errorCode) {
         super(errorCode.getMessage());
-        this.errorcode = errorCode;
+        this.errorCode = errorCode;
+    }
+
+    public GeneralException(ErrorCode errorCode, String message) {
+        super(errorCode.getMessage(message));
+        this.errorCode = errorCode;
+    }
+
+    public GeneralException(ErrorCode errorCode, String message, Throwable cause) {
+        super(errorCode.getMessage(message), cause);
+        this.errorCode = errorCode;
     }
 
     public GeneralException(ErrorCode errorCode, Throwable cause) {
-        super(errorCode.getMessage(), cause);
-        this.errorcode = errorCode;
+        super(errorCode.getMessage(cause), cause);
+        this.errorCode = errorCode;
     }
-
-    public GeneralException(ErrorCode errorCode, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(errorCode.getMessage(), cause, enableSuppression, writableStackTrace);
-        this.errorcode = ErrorCode.INTERNAL_ERROR;
-    }
-
 
 }

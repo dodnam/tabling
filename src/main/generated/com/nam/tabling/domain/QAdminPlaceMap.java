@@ -1,21 +1,22 @@
 package com.nam.tabling.domain;
 
-import com.querydsl.core.types.Path;
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
 import com.querydsl.core.types.PathMetadata;
-import com.querydsl.core.types.dsl.DateTimePath;
-import com.querydsl.core.types.dsl.EntityPathBase;
-import com.querydsl.core.types.dsl.NumberPath;
+import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
 import com.querydsl.core.types.dsl.PathInits;
 
-import javax.annotation.Generated;
-import java.time.LocalDateTime;
 
-import static com.querydsl.core.types.PathMetadataFactory.forVariable;
-
+/**
+ * QAdminPlaceMap is a Querydsl query type for AdminPlaceMap
+ */
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QAdminPlaceMap extends EntityPathBase<AdminPlaceMap> {
 
-    private static final long serialVersionUID = 1010157086L;
+    private static final long serialVersionUID = 965113758L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
@@ -23,7 +24,7 @@ public class QAdminPlaceMap extends EntityPathBase<AdminPlaceMap> {
 
     public final QAdmin admin;
 
-    public final DateTimePath<LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
@@ -54,3 +55,4 @@ public class QAdminPlaceMap extends EntityPathBase<AdminPlaceMap> {
     }
 
 }
+

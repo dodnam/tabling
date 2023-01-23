@@ -1,26 +1,28 @@
 package com.nam.tabling.domain;
 
-import com.nam.tabling.domain.domain.Event;
-import com.nam.tabling.domain.domain.Place;
-import com.nam.tabling.constant.PlaceType;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.PathMetadata;
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
 import com.querydsl.core.types.dsl.*;
 
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
-import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
+/**
+ * QPlace is a Querydsl query type for Place
+ */
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QPlace extends EntityPathBase<Place> {
 
-    private static final long serialVersionUID = -1415082527L;
+    private static final long serialVersionUID = -410927263L;
 
     public static final QPlace place = new QPlace("place");
 
     public final StringPath address = createString("address");
 
-    public final SetPath<AdminPlaceMap, QAdminPlaceMap> adminPlaceMaps = this.<AdminPlaceMap, QAdminPlaceMap>createSet("adminPlaceMaps", AdminPlaceMap.class, QAdminPlaceMap.class, PathInits.DIRECT2);
+    public final SetPath<AdminPlaceMap, SimplePath<AdminPlaceMap>> adminPlaceMaps = this.<AdminPlaceMap, SimplePath<AdminPlaceMap>>createSet("adminPlaceMaps", AdminPlaceMap.class, SimplePath.class, PathInits.DIRECT2);
 
     public final NumberPath<Integer> capacity = createNumber("capacity", Integer.class);
 
@@ -38,7 +40,7 @@ public class QPlace extends EntityPathBase<Place> {
 
     public final StringPath placeName = createString("placeName");
 
-    public final EnumPath<PlaceType> placeType = createEnum("placeType", PlaceType.class);
+    public final EnumPath<com.nam.tabling.constant.PlaceType> placeType = createEnum("placeType", com.nam.tabling.constant.PlaceType.class);
 
     public QPlace(String variable) {
         super(Place.class, forVariable(variable));
@@ -53,3 +55,4 @@ public class QPlace extends EntityPathBase<Place> {
     }
 
 }
+

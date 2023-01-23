@@ -7,24 +7,35 @@ import com.nam.tabling.exception.GeneralException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotWritableException;
 import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.web.HttpMediaTypeNotAcceptableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.handler.DispatcherServletWebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolationException;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.arguments;
 
-class APIExceptionHandlerTest {
+@DisplayName("핸들러 - API 에러 처리")
+class ApiExceptionHandlerTest {
 
     private APIExceptionHandler sut;
     private WebRequest webRequest;
-    private HttpServletRequest httpServletRequest;
 
     @BeforeEach
     void setUp() {
@@ -34,56 +45,83 @@ class APIExceptionHandlerTest {
 
     @DisplayName("검증 오류 - 응답 데이터 정의")
     @Test
-    void givenException_whenCallingValidation_thenReturnResponseEntity() {
-        // given
+    void givenValidationException_whenHandlingAPIException_thenReturnsResponseEntity() {
+        // Given
         ConstraintViolationException e = new ConstraintViolationException(Set.of());
 
-        // when
+        // When
         ResponseEntity<Object> response = sut.validation(e, webRequest);
-        response.getBody();
 
-        // then
+        // Then
         assertThat(response)
                 .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.VALIDATION_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.BAD_REQUEST);
-
     }
 
     @DisplayName("프로젝트 일반 오류 - 응답 데이터 정의")
     @Test
-    void givenGeneralException_whenCallingValidation_thenReturnResponseEntity() {
-        // given
+    void givenGeneralException_whenHandlingAPIException_thenReturnsResponseEntity() {
+        // Given
         ErrorCode errorCode = ErrorCode.INTERNAL_ERROR;
         GeneralException e = new GeneralException(errorCode);
 
-        // when
+        // When
         ResponseEntity<Object> response = sut.general(e, webRequest);
-        response.getBody();
 
-        // then
+        // Then
         assertThat(response)
-                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, e.getErrorcode(), e))
+                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, errorCode, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
-                .hasFieldOrPropertyWithValue("statusCode", e.getErrorcode().isClientSideError() ? HttpStatus.BAD_REQUEST : HttpStatus.INTERNAL_SERVER_ERROR);
-
+                .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @DisplayName("기타 전체 오류 - 응답 데이터 정의")
+    @DisplayName("스프링이 던진 오류 - 응답 데이터 정의")
+    @MethodSource
+    @ParameterizedTest(name = "[{index}] {0} ===> {1}")
+    void givenSpringException_whenHandlingAPIException_thenReturnsResponseEntity(Exception e, HttpStatus httpStatus) {
+        // Given
+        HttpHeaders headers = HttpHeaders.EMPTY;
+        ErrorCode errorCode = ErrorCode.valueOf(httpStatus);
+
+        // When
+        ResponseEntity<Object> response = sut.handleExceptionInternal(e, null, headers, httpStatus, webRequest);
+
+        // Then
+        assertThat(response)
+                .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, errorCode, e))
+                .hasFieldOrPropertyWithValue("headers", headers)
+                .hasFieldOrPropertyWithValue("statusCode", httpStatus)
+                .extracting(ResponseEntity::getBody)
+                .hasFieldOrPropertyWithValue("message", errorCode.getMessage() + " - " + e.getMessage());
+    }
+
+    static Stream<Arguments> givenSpringException_whenHandlingAPIException_thenReturnsResponseEntity() {
+        String msg = "test message";
+
+        return Stream.of(
+                arguments(new HttpRequestMethodNotSupportedException(HttpMethod.POST.name(), msg), HttpStatus.METHOD_NOT_ALLOWED),
+                arguments(new HttpMediaTypeNotSupportedException(msg), HttpStatus.UNSUPPORTED_MEDIA_TYPE),
+                arguments(new HttpMediaTypeNotAcceptableException(msg), HttpStatus.NOT_ACCEPTABLE),
+                arguments(new ServletRequestBindingException(msg), HttpStatus.BAD_REQUEST),
+                arguments(new HttpMessageNotWritableException(msg), HttpStatus.INTERNAL_SERVER_ERROR)
+        );
+    }
+
+    @DisplayName("기타(전체) 오류 - 응답 데이터 정의")
     @Test
-    void givenOtherException_whenCallingValidation_thenReturnResponseEntity() {
-        // given
+    void givenOtherException_whenHandlingAPIException_thenReturnsResponseEntity() {
+        // Given
         Exception e = new Exception();
 
-        // when
+        // When
         ResponseEntity<Object> response = sut.exception(e, webRequest);
-        response.getBody();
 
-        // then
+        // Then
         assertThat(response)
                 .hasFieldOrPropertyWithValue("body", APIErrorResponse.of(false, ErrorCode.INTERNAL_ERROR, e))
                 .hasFieldOrPropertyWithValue("headers", HttpHeaders.EMPTY)
                 .hasFieldOrPropertyWithValue("statusCode", HttpStatus.INTERNAL_SERVER_ERROR);
-
     }
+
 }

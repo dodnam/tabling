@@ -1,25 +1,28 @@
 package com.nam.tabling.domain;
 
-import com.nam.tabling.domain.domain.Admin;
-import com.querydsl.core.types.Path;
-import com.querydsl.core.types.PathMetadata;
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
 import com.querydsl.core.types.dsl.*;
 
+import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
-import java.time.LocalDateTime;
+import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
-import static com.querydsl.core.types.PathMetadataFactory.forVariable;
 
+/**
+ * QAdmin is a Querydsl query type for Admin
+ */
 @Generated("com.querydsl.codegen.EntitySerializer")
 public class QAdmin extends EntityPathBase<Admin> {
 
-    private static final long serialVersionUID = -1429161943L;
+    private static final long serialVersionUID = -425006679L;
 
     public static final QAdmin admin = new QAdmin("admin");
 
     public final SetPath<AdminPlaceMap, QAdminPlaceMap> adminPlaceMaps = this.<AdminPlaceMap, QAdminPlaceMap>createSet("adminPlaceMaps", AdminPlaceMap.class, QAdminPlaceMap.class, PathInits.DIRECT2);
 
-    public final DateTimePath<LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final StringPath email = createString("email");
 
@@ -48,3 +51,4 @@ public class QAdmin extends EntityPathBase<Admin> {
     }
 
 }
+

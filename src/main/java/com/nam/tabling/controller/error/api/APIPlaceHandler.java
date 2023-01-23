@@ -1,4 +1,4 @@
-package com.nam.tabling.controller.api;
+package com.nam.tabling.controller.error.api;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.function.HandlerFunction;

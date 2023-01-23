@@ -7,6 +7,7 @@ import com.querydsl.core.types.dsl.*;
 import com.querydsl.core.types.PathMetadata;
 import javax.annotation.Generated;
 import com.querydsl.core.types.Path;
+import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
@@ -17,11 +18,13 @@ public class QEvent extends EntityPathBase<Event> {
 
     private static final long serialVersionUID = -420783884L;
 
+    private static final PathInits INITS = PathInits.DIRECT2;
+
     public static final QEvent event = new QEvent("event");
 
     public final NumberPath<Integer> capacity = createNumber("capacity", Integer.class);
 
-    public final DateTimePath<java.time.LocalDateTime> createdAd = createDateTime("createdAd", java.time.LocalDateTime.class);
+    public final DateTimePath<java.time.LocalDateTime> createdAt = createDateTime("createdAt", java.time.LocalDateTime.class);
 
     public final NumberPath<Integer> currentNumberOfPeople = createNumber("currentNumberOfPeople", Integer.class);
 
@@ -39,18 +42,27 @@ public class QEvent extends EntityPathBase<Event> {
 
     public final DateTimePath<java.time.LocalDateTime> modifiedAt = createDateTime("modifiedAt", java.time.LocalDateTime.class);
 
-    public final NumberPath<Long> placeId = createNumber("placeId", Long.class);
+    public final QPlace place;
 
     public QEvent(String variable) {
-        super(Event.class, forVariable(variable));
+        this(Event.class, forVariable(variable), INITS);
     }
 
     public QEvent(Path<? extends Event> path) {
-        super(path.getType(), path.getMetadata());
+        this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
     public QEvent(PathMetadata metadata) {
-        super(Event.class, metadata);
+        this(metadata, PathInits.getFor(metadata, INITS));
+    }
+
+    public QEvent(PathMetadata metadata, PathInits inits) {
+        this(Event.class, metadata, inits);
+    }
+
+    public QEvent(Class<? extends Event> type, PathMetadata metadata, PathInits inits) {
+        super(type, metadata, inits);
+        this.place = inits.isInitialized("place") ? new QPlace(forProperty("place")) : null;
     }
 
 }

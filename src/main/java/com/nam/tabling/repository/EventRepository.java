@@ -1,9 +1,13 @@
 package com.nam.tabling.repository;
 
 import com.nam.tabling.domain.Event;
+import com.nam.tabling.domain.Place;
 import com.nam.tabling.domain.QEvent;
+import com.nam.tabling.repository.querydsl.EventRepositoryCustom;
 import com.querydsl.core.types.dsl.ComparableExpression;
 import com.querydsl.core.types.dsl.StringExpression;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
@@ -14,10 +18,11 @@ import java.util.Optional;
 // TODO : 인스턴스 생성 편의를 위한 임시 default, repository layer 완전히 구현하면 삭제 필요
 public interface EventRepository extends
         JpaRepository<Event, Long>,
+        EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
 
-    Optional<Event> findByPlaceIdAndEventNameAndCapacity();
+    Page<Event> findByPlace(Place place, Pageable pageable);
 
     @Override
     default void customize(QuerydslBindings bindings, QEvent root) {

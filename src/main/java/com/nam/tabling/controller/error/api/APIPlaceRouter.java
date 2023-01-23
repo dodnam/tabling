@@ -1,4 +1,4 @@
-package com.nam.tabling.controller.api;
+package com.nam.tabling.controller.error.api;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
