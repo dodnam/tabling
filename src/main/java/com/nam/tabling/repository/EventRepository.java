@@ -1,5 +1,6 @@
 package com.nam.tabling.repository;
 
+import com.nam.tabling.constant.EventStatus;
 import com.nam.tabling.domain.Event;
 import com.nam.tabling.domain.Place;
 import com.nam.tabling.domain.QEvent;
@@ -9,10 +10,13 @@ import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.querydsl.binding.QuerydslBinderCustomizer;
 import org.springframework.data.querydsl.binding.QuerydslBindings;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 // TODO : 인스턴스 생성 편의를 위한 임시 default, repository layer 완전히 구현하면 삭제 필요
@@ -21,6 +25,9 @@ public interface EventRepository extends
         EventRepositoryCustom,
         QuerydslPredicateExecutor<Event>,
         QuerydslBinderCustomizer<QEvent> {
+
+    List<Event> findByEventNameAndEventStatus(String eventName, EventStatus eventStatus);
+    Optional<Event> findFirstByEventEndDatetimeBetween(LocalDateTime from, LocalDateTime to);
 
     Page<Event> findByPlace(Place place, Pageable pageable);
 

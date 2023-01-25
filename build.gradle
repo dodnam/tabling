@@ -42,6 +42,7 @@ dependencies {
 
 	// Querydsl
 	implementation "com.querydsl:querydsl-jpa"
+	implementation "com.querydsl:querydsl-core"
 	implementation "com.querydsl:querydsl-collections"
 	annotationProcessor "com.querydsl:querydsl-apt:${project.querydslVersion}:jpa" // querydsl JPAAnnotationProcessor 사용 지정
 	annotationProcessor "jakarta.annotation:jakarta.annotation-api" // java.lang.NoClassDefFoundError (javax.annotation.Generated) 발생 대응
