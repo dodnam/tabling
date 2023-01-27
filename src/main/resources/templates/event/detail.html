@@ -1,49 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Title</title>
+  <title>이벤트</title>
 </head>
 <body>
 <p>
-  <span>This is events page.</span>
+  <span id="eventTitle">This is event page.</span>
 </p>
-<table>
+<table id="eventTable">
   <tbody>
     <tr>
-      <td>장소 ID</td>
-      <td>${event.placeId()!"?"}</td>
+      <td>장소명</td>
+      <td><span id="placeName">?</span></td>
     </tr>
     <tr>
       <td>이벤트명</td>
-      <td>${event.eventName()!"?"}</td>
+      <td><span id="eventName">?</span></td>
     </tr>
     <tr>
       <td>이벤트 상태</td>
-      <td>${event.eventStatus()!"?"}</td>
+      <td><span id="eventStatus">?</span></td>
     </tr>
     <tr>
       <td>시작 일시</td>
-      <td>${event.eventStartDatetime()!"?"}</td>
+      <td><span id="eventStartDatetime">?</span></td>
     </tr>
     <tr>
       <td>종료 일시</td>
-      <td>${event.eventEndDatetime()!"?"}</td>
+      <td><span id="eventEndDatetime">?</span></td>
     </tr>
     <tr>
       <td>현재 인원</td>
-      <td>${event.currentNumberOfPeople()!"?"}</td>
+      <td><span id="currentNumberOfPeople">?</span></td>
     </tr>
     <tr>
       <td>최대 수용 인원</td>
-      <td>${event.capacity()!"?"}</td>
+      <td><span id="capacity">?</span></td>
     </tr>
     <tr>
-      <td><label>메모</label></td>
-      <td><textarea readonly>${event.memo()!""}</textarea></td>
+      <td><label for="memo">메모</label></td>
+      <td><textarea id="memo" readonly></textarea></td>
     </tr>
   </tbody>
 </table>
-<a href="/events" type="button">취소</a>
+<a id="backToEvents" type="button">취소</a>
 </body>
 </html>
